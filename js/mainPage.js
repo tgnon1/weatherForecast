@@ -3,6 +3,7 @@
 // This is sample code to demonstrate navigation.
 // You need not use it for final app.
 
+clearLocations();
 loadLocations();
 
 // Add a location for demo purpose

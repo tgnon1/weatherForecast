@@ -117,12 +117,11 @@ function LocationWeatherCache()
         // Check if the weather data point for this date is already in the forecasts array
         var name = location.latitude + ',' + location.longitude + ',' + time;
         if (location.forecasts.hasOwnProperty(name)) {
+            console.log("Load saved forecasts");
             callback(index, location.forecasts[name]);
-            // console.log(location.forecasts[name]);
-            // callback(index, location.forecasts[name]);
         } else {
             var script = document.createElement('script');
-            script.src = 'https://api.forecast.io/forecast/b0d9cfc6e50e108064070318f45d3254/' + location.latitude + ',' + location.longitude + ',' + time + '?callback=readData';
+            script.src = 'https://api.forecast.io/forecast/b0d9cfc6e50e108064070318f45d3254/' + location.latitude + ',' + location.longitude + ',' + time + '?callback=locationWeatherCache.weatherResponse';
             document.body.appendChild(script);
         }
 
@@ -135,6 +134,7 @@ function LocationWeatherCache()
     // weather request.
     //
     this.weatherResponse = function(response) {
+        console.log("Save new forecasts");
         var index = indexForLocation(response.latitude, response.longitude);
         var location = this.locationAtIndex(index);
         var daily = response.daily.data[0];
@@ -142,6 +142,8 @@ function LocationWeatherCache()
         var time = date.forecastDateString();
         var name = location.latitude + ',' + location.longitude + ',' + time;
         location.forecasts[name] = daily;
+        saveLocations();
+        init();
     };
 
     // Private methods:
@@ -172,7 +174,6 @@ function loadLocations()
     locationWeatherCache = new LocationWeatherCache();
     var locationWeatherCachePDO = localStorage.getItem(APP_PREFIX + "-locations");
     locationWeatherCache.initialiseFromPDO(locationWeatherCachePDO);
-
 }
 
 // Save the singleton locationWeatherCache to Local Storage.
@@ -182,3 +183,12 @@ function saveLocations()
     localStorage.setItem(APP_PREFIX + "-locations", locationWeatherCache.toJSON());
 }
 
+// For testing purpose
+function clearLocations()
+{
+    localStorage.removeItem(APP_PREFIX + "-locations");
+}
+// Convert F degree to C degree
+function fToC(degree) {
+    return Math.round((degree - 32) * 5/9 * 100, 2)/100;
+}
