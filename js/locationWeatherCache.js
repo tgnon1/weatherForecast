@@ -122,7 +122,7 @@ function LocationWeatherCache()
             // callback(index, location.forecasts[name]);
         } else {
             var script = document.createElement('script');
-            script.src = 'https://api.forecast.io/forecast/b0d9cfc6e50e108064070318f45d3254/' + location.latitude + ',' + location.longitude + ',' + time + '?callback=' + callback;
+            script.src = 'https://api.forecast.io/forecast/b0d9cfc6e50e108064070318f45d3254/' + location.latitude + ',' + location.longitude + ',' + time + '?callback=readData';
             document.body.appendChild(script);
         }
 
