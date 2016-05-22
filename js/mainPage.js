@@ -6,9 +6,9 @@
 loadLocations();
 
 // Add a location for demo purpose
-// locationWeatherCache.addLocation(-37.9152515,145.1115844,'Clayton');
-// locationWeatherCache.addLocation(-27.9866558,153.0435033,'Gold Coast');
-// saveLocations();
+locationWeatherCache.addLocation(-37.9152515,145.1115844,'Clayton');
+locationWeatherCache.addLocation(-27.9866558,153.0435033,'Gold Coast');
+saveLocations();
 
 
 function viewLocation(locationName)
